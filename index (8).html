@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shirukey PCs — Rebuilt Computers, Fair Prices</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --bg: #12141a;
+    --panel: #1b1e26;
+    --panel-2: #21242e;
+    --ember: #ff5a36;
+    --violet: #8b5cf6;
+    --text: #edeef2;
+    --muted: #9198a8;
+    --line: #2c303b;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.5; overflow-x:hidden;}
+  h1,h2,h3{font-family:'Rajdhani',sans-serif; text-transform:uppercase; letter-spacing:0.02em; font-weight:700;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1140px; margin:0 auto; padding:0 28px;}
+
+  header{position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(18,20,26,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; padding:18px 28px; max-width:1140px; margin:0 auto;}
+  .logo{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:1.3rem; letter-spacing:0.03em; display:flex; align-items:center; gap:8px;}
+  .logo-mark{width:10px; height:10px; background:var(--ember); border-radius:2px; box-shadow:0 0 12px var(--ember);}
+  .nav-links{display:flex; gap:28px;}
+  .nav-links a{font-size:0.85rem; color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:0.08em; transition:color 0.2s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{background:var(--ember); color:#12141a; font-weight:600; padding:9px 20px; border-radius:2px; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.06em; transition:background 0.2s;}
+  .nav-cta:hover{background:#ff7355;}
+
+  .hero{padding:180px 0 110px; border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(ellipse 600px 400px at 80% -10%, rgba(139,92,246,0.14), transparent),
+      radial-gradient(ellipse 700px 500px at 10% 10%, rgba(255,90,54,0.10), transparent);}
+  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--ember); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:''; width:24px; height:1px; background:var(--ember);}
+  h1.headline{font-size:3.6rem; line-height:0.98; margin-bottom:24px;}
+  h1.headline .accent{color:var(--ember);}
+  .sub{color:var(--muted); font-size:1.08rem; max-width:460px; margin-bottom:36px;}
+  .hero-actions{display:flex; gap:16px; align-items:center;}
+  .btn-primary{background:var(--ember); color:#12141a; font-weight:600; padding:15px 30px; border-radius:2px; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.06em; transition:transform 0.15s, background 0.2s; display:inline-block;}
+  .btn-primary:hover{background:#ff7355; transform:translateY(-2px);}
+  .btn-ghost{color:var(--text); font-size:0.9rem; font-weight:500; border-bottom:1px solid var(--line); padding-bottom:2px; transition:border-color 0.2s;}
+  .btn-ghost:hover{border-color:var(--ember);}
+
+  .hero-visual{position:relative; height:360px; display:flex; align-items:center; justify-content:center;}
+  .hero-tower{width:220px; height:300px;}
+
+  section{padding:96px 0;}
+  .section-head{max-width:600px; margin-bottom:52px;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-head h2{font-size:2.1rem; margin-bottom:16px;}
+  .section-head p{color:var(--muted); font-size:1.02rem;}
+
+  .why{border-bottom:1px solid var(--line);}
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .why-step{background:var(--bg); padding:34px 26px;}
+  .why-step .icon{font-size:1.5rem; margin-bottom:14px; display:block;}
+  .why-step h3{font-size:1.05rem; margin-bottom:10px;}
+  .why-step p{color:var(--muted); font-size:0.9rem;}
+
+  .about{background:var(--panel); border-bottom:1px solid var(--line);}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  .about-copy p{color:var(--muted); font-size:1rem; margin-bottom:16px;}
+  .about-stats{display:flex; flex-direction:column; gap:22px;}
+  .about-stat{border-left:2px solid var(--ember); padding-left:16px;}
+  .about-stat .num{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:2rem; line-height:1;}
+  .about-stat .lbl{font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-top:4px;}
+
+  .listings{border-bottom:1px solid var(--line);}
+  .listings-controls{display:flex; align-items:center; gap:14px; margin-bottom:32px; flex-wrap:wrap;}
+  .listings-controls label{font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;}
+  .listings-controls select{background:var(--panel-2); border:1px solid var(--line); color:var(--text); padding:9px 14px; border-radius:4px; font-size:0.88rem;}
+  .listings-count{font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--muted); margin-left:auto;}
+  .listings-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:20px;}
+  .pc-card{background:var(--panel-2); border:1px solid var(--line); border-radius:6px; overflow:hidden; transition:border-color 0.2s, transform 0.2s; position:relative;}
+  .pc-card:hover{border-color:var(--ember); transform:translateY(-4px);}
+  .pc-card.sold{opacity:0.55;}
+  .pc-thumb{height:150px; display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--line); position:relative;}
+  .pc-sold-badge{position:absolute; top:10px; right:10px; background:#4a5162; color:#edeef2; font-family:'JetBrains Mono',monospace; font-size:0.68rem; font-weight:700; padding:4px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:0.06em;}
+  .pc-info{padding:20px 22px;}
+  .pc-info .tag{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--ember); text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:8px;}
+  .pc-info h3{font-size:1.08rem; margin-bottom:10px;}
+  .pc-specs{list-style:none; margin-bottom:16px;}
+  .pc-specs li{color:var(--muted); font-size:0.84rem; padding:3px 0; display:flex; justify-content:space-between;}
+  .pc-specs li span:first-child{color:var(--text);}
+  .pc-row{display:flex; justify-content:space-between; align-items:center;}
+  .pc-price{font-family:'JetBrains Mono',monospace; color:var(--ember); font-weight:600; font-size:1.2rem;}
+  .pc-buy{background:transparent; border:1px solid var(--ember); color:var(--ember); padding:8px 16px; border-radius:4px; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; transition:all 0.2s; cursor:pointer;}
+  .pc-buy:hover:not(:disabled){background:var(--ember); color:#12141a;}
+  .pc-buy:disabled{border-color:var(--line); color:var(--muted); cursor:not-allowed;}
+
+  .custom{background:var(--panel); border-bottom:1px solid var(--line);}
+  .custom-box{background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:44px; display:grid; grid-template-columns:1.3fr 0.7fr; gap:40px; align-items:center;}
+  .custom-box h3{font-size:1.5rem; margin-bottom:14px;}
+  .custom-box p{color:var(--muted); font-size:0.96rem; margin-bottom:0;}
+
+  .faq{border-bottom:1px solid var(--line);}
+  .faq-list{max-width:760px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item:first-child{border-top:1px solid var(--line);}
+  .faq-q{width:100%; background:none; border:none; color:var(--text); text-align:left; padding:20px 4px; font-family:'Rajdhani',sans-serif; font-weight:600; font-size:1.02rem; text-transform:uppercase; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px;}
+  .faq-q .plus{color:var(--ember); font-size:1.3rem; font-weight:400; transition:transform 0.2s; flex-shrink:0;}
+  .faq-item.open .faq-q .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height 0.25s ease;}
+  .faq-item.open .faq-a{max-height:200px;}
+  .faq-a p{color:var(--muted); font-size:0.9rem; padding:0 4px 20px;}
+
+  .buy-where{background:var(--panel);}
+  .buy-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .buy-card{background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:26px; text-align:center; transition:border-color 0.2s;}
+  .buy-card:hover{border-color:var(--ember);}
+  .buy-card .platform{font-size:1.02rem; margin-bottom:8px;}
+  .buy-card p{color:var(--muted); font-size:0.86rem;}
+
+  footer{padding:46px 0 36px;}
+  .footer-grid{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; padding-bottom:28px; border-bottom:1px solid var(--line); margin-bottom:22px;}
+  .footer-links{display:flex; gap:26px;}
+  .footer-links a{color:var(--muted); font-size:0.85rem; transition:color 0.2s;}
+  .footer-links a:hover{color:var(--text);}
+  .footer-bottom{display:flex; justify-content:space-between; color:var(--muted); font-size:0.78rem; font-family:'JetBrains Mono',monospace;}
+
+  @media (max-width:860px){
+    .hero-grid, .why-grid, .buy-grid, .about-grid, .custom-box{grid-template-columns:1fr;}
+    h1.headline{font-size:2.3rem;}
+    .nav-links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><span class="logo-mark"></span>SHIRUKEY PCS</div>
+    <div class="nav-links">
+      <a href="#listings">Listings</a>
+      <a href="#why">Why us</a>
+      <a href="#custom">Custom build</a>
+      <a href="#faq">FAQ</a>
+      <a href="#buy-where">Where to buy</a>
+    </div>
+    <a href="#listings" class="nav-cta">See what's in stock</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Cleaned, tested, ready to go</div>
+      <h1 class="headline">Second-hand PCs.<br>Rebuilt <span class="accent">right.</span></h1>
+      <p class="sub">We source used PCs, deep clean them, swap tired parts, and put them in fresh cases — so you get a solid machine for a fraction of retail.</p>
+      <div class="hero-actions">
+        <a href="#listings" class="btn-primary">See what's in stock</a>
+        <a href="#why" class="btn-ghost">How it works</a>
+      </div>
+    </div>
+    <div class="hero-visual" id="hero-visual"></div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>From used to like-new</h2>
+      <p>Every PC we sell goes through the same process before it's listed.</p>
+    </div>
+  </div>
+  <div class="why-grid">
+    <div class="why-step">
+      <span class="icon">🔍</span>
+      <h3>Sourced carefully</h3>
+      <p>We buy working PCs from local sellers and check them over before we commit.</p>
+    </div>
+    <div class="why-step">
+      <span class="icon">🧽</span>
+      <h3>Cleaned and rebuilt</h3>
+      <p>Full teardown, dust removal, fresh thermal paste, and a new case where needed.</p>
+    </div>
+    <div class="why-step">
+      <span class="icon">✅</span>
+      <h3>Stress tested</h3>
+      <p>Every machine gets benchmarked and run under load before it's listed for sale.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="wrap about-grid">
+    <div class="about-copy">
+      <div class="eyebrow">Why we do this</div>
+      <h2 style="margin-bottom:18px;">Retail markup is out of hand</h2>
+      <p>A brand-new office PC costs more than it should, and a lot of perfectly good machines get tossed out or sold for parts. We think there's a better way — take what's already out there, fix it up properly, and sell it honestly.</p>
+      <p>No inflated "was" prices, no mystery specs. What's listed is what you get.</p>
+    </div>
+    <div class="about-stats">
+      <div class="about-stat"><div class="num">100%</div><div class="lbl">stress tested before sale</div></div>
+      <div class="about-stat"><div class="num">30-day</div><div class="lbl">working warranty</div></div>
+      <div class="about-stat"><div class="num">Fresh</div><div class="lbl">OS install on every unit</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="listings" id="listings">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Current stock</div>
+      <h2>What's ready now</h2>
+      <p>Every unit here is a one-off — once it's sold, it's gone. Filter by use case to find what fits.</p>
+    </div>
+    <div class="listings-controls">
+      <label for="tier-filter">Use case</label>
+      <select id="tier-filter">
+        <option value="all">All PCs</option>
+        <option value="office">Office / everyday</option>
+        <option value="gaming">Gaming</option>
+        <option value="creator">Creator / workstation</option>
+      </select>
+      <span class="listings-count" id="listings-count"></span>
+    </div>
+    <div class="listings-grid" id="listings-grid"></div>
+  </div>
+</section>
+
+<section class="custom" id="custom">
+  <div class="wrap">
+    <div class="custom-box">
+      <div>
+        <h3>Don't see what you need?</h3>
+        <p>Tell us your budget and what you'll use it for — office work, gaming, editing — and we'll source and rebuild something that fits, or point you to the closest thing we've got coming in.</p>
+      </div>
+      <a href="#" class="btn-primary" id="custom-request-btn" style="text-align:center;">Request a build</a>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Before you buy</div>
+      <h2>Questions people ask</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q"><span>What warranty comes with each PC?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Every machine comes with a 30-day working warranty. If something we rebuilt fails in that window, we'll fix or replace it.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Is the operating system included?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Yes — every PC ships with a freshly installed, licensed copy of Windows unless the listing says otherwise.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Can I test it before I buy?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>For local pickup, yes — happy to power it on and show you it running before you commit.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Do you ship, or pickup only?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Both — local pickup is easiest, but we can box up and ship most units if you're not nearby.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Will you take my old PC as a trade-in?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Sometimes — send us the specs and condition and we'll let you know if it's something we can use.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="buy-where" id="buy-where">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Other ways to buy</div>
+      <h2>Find us elsewhere too</h2>
+      <p>We list here first, but you'll also find us in these spots.</p>
+    </div>
+    <div class="buy-grid">
+      <div class="buy-card">
+        <div class="platform">Facebook Marketplace</div>
+        <p>Local pickup, message us directly for the latest listings.</p>
+      </div>
+      <div class="buy-card">
+        <div class="platform">Gumtree</div>
+        <p>Same stock, cross-listed for anyone who prefers browsing there.</p>
+      </div>
+      <div class="buy-card">
+        <div class="platform">Email us direct</div>
+        <p>Ask about a specific build or request something custom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="logo"><span class="logo-mark"></span>SHIRUKEY PCS</div>
+      <div class="footer-links">
+        <a href="#listings">Listings</a>
+        <a href="#why">Why us</a>
+        <a href="#faq">FAQ</a>
+        <a href="mailto:getshirukey@gmail.com">Email</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Shirukey PCs</span>
+      <span>Rebuilt right, priced fair</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const TIER_COLORS = { office:'#4a5162', gaming:'#ff5a36', creator:'#8b5cf6' };
+
+  const LISTINGS = [
+    { name:'Fresh Build — RX 7600', tier:'gaming', cpu:'Intel i5-12400F', ram:'16GB DDR4', storage:'1.25TB', gpu:'RX 7600 (Brand New)', price:1200, sold:false, image:'images/rx7600-build-1.jpg' },
+    { name:'Everyday Office Mini', tier:'office', cpu:'Intel i3-10100', ram:'8GB', storage:'256GB SSD', gpu:'Integrated', price:249, sold:false },
+    { name:'Home & Study Build', tier:'office', cpu:'Ryzen 5 3400G', ram:'16GB', storage:'512GB SSD', gpu:'Integrated', price:329, sold:false },
+    { name:'Compact SFF Desktop', tier:'office', cpu:'Intel i5-9500', ram:'8GB', storage:'256GB SSD', gpu:'Integrated', price:299, sold:true },
+    { name:'Budget Gaming Starter', tier:'gaming', cpu:'Ryzen 5 3600', ram:'16GB', storage:'500GB SSD', gpu:'GTX 1650', price:429, sold:false },
+    { name:'1080p Gaming Rig', tier:'gaming', cpu:'Intel i5-11400F', ram:'16GB', storage:'1TB SSD', gpu:'RTX 3060', price:749, sold:false },
+    { name:'High-FPS Build', tier:'gaming', cpu:'Ryzen 7 5700X', ram:'32GB', storage:'1TB NVMe', gpu:'RTX 4070', price:1499, sold:false },
+    { name:'1440p All-Rounder', tier:'gaming', cpu:'Intel i5-12400F', ram:'16GB', storage:'1TB NVMe', gpu:'RTX 3070', price:999, sold:true },
+    { name:'Editing & Render Box', tier:'creator', cpu:'Intel i7-10700', ram:'32GB', storage:'1TB NVMe', gpu:'RTX 3070', price:1099, sold:false },
+    { name:'Compact Creator Build', tier:'creator', cpu:'Ryzen 7 5800X', ram:'32GB', storage:'2TB NVMe', gpu:'RTX 3060 Ti', price:1199, sold:false }
+  ];
+
+  function towerSVG(hex, big){
+    const bezel = shade(hex, big ? -10 : -35);
+    const body = shade(hex, -55);
+    return `<svg viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg" style="width:${big?'160px':'100%'};height:${big?'220px':'100%'};display:block;">
+      <rect x="10" y="6" width="140" height="208" rx="10" fill="${body}" stroke="${shade(hex,-20)}" stroke-width="2"/>
+      <rect x="10" y="6" width="140" height="208" rx="10" fill="none" stroke="${hex}" stroke-width="1" opacity="0.35"/>
+      <rect x="24" y="26" width="112" height="8" rx="3" fill="${bezel}"/>
+      <rect x="24" y="42" width="112" height="8" rx="3" fill="${bezel}"/>
+      <circle cx="30" cy="20" r="5" fill="${hex}"/>
+      <rect x="24" y="70" width="112" height="120" rx="6" fill="${bezel}" opacity="0.6"/>
+      <rect x="24" y="190" width="112" height="16" rx="3" fill="${hex}" opacity="0.85"/>
+    </svg>`;
+  }
+  function shade(hex, amt){
+    const num = parseInt(hex.replace('#',''),16);
+    let r=(num>>16)+amt, g=((num>>8)&0x00FF)+amt, b=(num&0x0000FF)+amt;
+    r=Math.min(255,Math.max(0,r)); g=Math.min(255,Math.max(0,g)); b=Math.min(255,Math.max(0,b));
+    return '#'+(0x1000000+r*0x10000+g*0x100+b).toString(16).slice(1);
+  }
+
+  document.getElementById('hero-visual').innerHTML = `<div class="hero-tower">${towerSVG('#ff5a36', true)}</div>`;
+
+  const grid = document.getElementById('listings-grid');
+  const countEl = document.getElementById('listings-count');
+  const filterEl = document.getElementById('tier-filter');
+  const TIER_LABEL = { office:'Office / everyday', gaming:'Gaming', creator:'Creator / workstation' };
+
+  function renderListings(){
+    const filter = filterEl.value;
+    const items = filter === 'all' ? LISTINGS : LISTINGS.filter(p => p.tier === filter);
+    grid.innerHTML = '';
+    items.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'pc-card' + (p.sold ? ' sold' : '');
+      card.innerHTML = `
+        <div class="pc-thumb">
+          ${p.sold ? '<span class="pc-sold-badge">Sold</span>' : ''}
+          ${p.image ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;">` : towerSVG(TIER_COLORS[p.tier])}
+        </div>
+        <div class="pc-info">
+          <span class="tag">${TIER_LABEL[p.tier]}</span>
+          <h3>${p.name}</h3>
+          <ul class="pc-specs">
+            <li><span>${p.cpu}</span></li>
+            <li><span>${p.ram} RAM</span><span>${p.storage}</span></li>
+            <li><span>${p.gpu}</span></li>
+          </ul>
+          <div class="pc-row">
+            <span class="pc-price">$${p.price}</span>
+            <button class="pc-buy" ${p.sold ? 'disabled' : ''} data-name="${p.name}" data-price="${p.price}" data-specs="${p.cpu}, ${p.ram} RAM, ${p.storage}, ${p.gpu}">${p.sold ? 'Sold out' : 'Enquire'}</button>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+    countEl.textContent = `${items.length} available`;
+  }
+  filterEl.addEventListener('change', renderListings);
+  renderListings();
+
+  grid.addEventListener('click', e => {
+    if(!e.target.classList.contains('pc-buy') || e.target.disabled) return;
+    const { name, price, specs } = e.target.dataset;
+    const subject = encodeURIComponent(`Enquiry: ${name}`);
+    const body = encodeURIComponent(`Hi Shirukey PCs,\n\nI'm interested in:\n\nBuild: ${name}\nSpecs: ${specs}\nPrice: $${price}\n\nIs it still available? Let me know next steps.\n\nThanks!`);
+    window.location.href = `mailto:getshirukey@gmail.com?subject=${subject}&body=${body}`;
+  });
+
+  document.getElementById('custom-request-btn').addEventListener('click', e => {
+    e.preventDefault();
+    const subject = encodeURIComponent('Custom PC build request');
+    const body = encodeURIComponent('Hi Shirukey PCs,\n\nI\'m after a custom build. Here\'s what I need:\n\nBudget: \nMain use (office / gaming / editing): \nAny specific parts or preferences: \n\nThanks!');
+    window.location.href = `mailto:getshirukey@gmail.com?subject=${subject}&body=${body}`;
+  });
+
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
